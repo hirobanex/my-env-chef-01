@@ -1,0 +1,169 @@
+# =========================================================================
+# .zshrc
+#
+#
+# =========================================================================
+
+    # 端末によって日本語表示する/しないの切り替え
+    if [ "$TERM" = "linux" ] ; then
+        export LANG=C
+    else
+        export LANG=ja_JP.UTF-8
+    fi
+    export LC_DATE=C
+
+    export PATH="/home/hirobanex/local/bin:$PATH"
+
+# -------------------------------------------------------------------------
+# プロンプト
+#
+# -------------------------------------------------------------------------
+
+    bindkey -e
+    setopt prompt_subst
+    PROMPT="[%n@${HOST%%.*}]%(#.#.$) "
+    RPROMPT='[%d] %D %T%'
+
+    setopt autopushd print_eight_bit
+    setopt auto_menu auto_cd correct auto_name_dirs auto_remove_slash
+    setopt extended_history hist_ignore_dups hist_ignore_space prompt_subst
+    setopt pushd_ignore_dups rm_star_silent sun_keyboard_hack
+    setopt extended_glob list_types no_beep always_last_prompt
+    setopt cdable_vars sh_word_split auto_param_keys
+    unsetopt promptcr
+    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+    zstyle ':completion:*:default' menu select=1
+    zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# -------------------------------------------------------------------------
+# 履歴
+#
+# -------------------------------------------------------------------------
+
+    # 履歴をファイルに保存する
+    HISTFILE=$HOME/.zsh_history
+
+    # メモリ内の履歴の数
+    HISTSIZE=10000
+
+    # 保存される履歴の数
+    SAVEHIST=10000
+
+    # 履歴ファイルに時刻を記録
+    setopt extended_history
+
+    function history-all { history -E 1 }
+    setopt hist_ignore_dups
+    setopt hist_reduce_blanks
+    autoload -U compinit
+    compinit
+
+# -------------------------------------------------------------------------
+# 補完
+#
+# -------------------------------------------------------------------------
+
+    # 基本
+    autoload -U compinit
+    compinit
+    zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+    zstyle ':completion:*:default' menu select true
+    setopt list_types
+
+# -------------------------------------------------------------------------
+# その他
+#
+# -------------------------------------------------------------------------
+
+    setopt magic_equal_subst
+    unsetopt promptcr
+    setopt NO_flow_control
+    setopt interactive_comments
+    setopt NO_hup
+    stty stop undef
+
+# -------------------------------------------------------------------------
+# alias
+#
+# -------------------------------------------------------------------------
+
+    alias vi="vim"
+    alias datetime="perl -e 'print scalar localtime; print qq{\n}'"
+    #alias less='w3m'
+    #alias lv='w3m'
+    alias -g L="| less"
+    alias grep="grep --color"
+
+    alias static_plackup="plackup -p 5555 -e \"use Plack::App::Directory; Plack::App::Directory->new({root=>'./'})->to_app\""
+    alias pmdoc="perldoc -MPod::Text::Color::Delight $1"
+
+# -------------------------------------------------------------------------
+# ls は色つけ
+#
+# -------------------------------------------------------------------------
+
+    alias ls='\ls -G'
+    alias s='ls'
+    alias l='ls'
+    alias sl='ls'
+    alias la='ls -a'
+    alias ll='ls -l'
+    alias llh='ls -lh'
+    export LSCOLORS=gxfxcxdxbxegedabagacad
+
+# -------------------------------------------------------------------------
+# タイトルバーにディレクトリとホスト名を表示
+#
+# -------------------------------------------------------------------------
+    if [ $TERM = "xterm-color" ]; then
+        precmd() {
+            TITLE=`print -P %m : %~`
+            echo -n "\e]2;$TITLE\a"
+        }
+    fi
+
+# =========================================================================
+# .zshenv
+#
+# =========================================================================
+
+    export PERL5LIB=./lib:$HOME/site_perl
+
+    export PKG_DBDIR=$HOME/local/var/db/pkg
+    export PORT_DBDIR=$HOME/local/var/db/pkg
+    export INSTALL_AS_USER
+    export LD_LIBRARY_PATH=$HOME/local/lib
+
+#    TERM=xterm-256color; export TERM
+
+# -------------------------------------------------------------------------
+# 環境変数
+#
+# -------------------------------------------------------------------------
+    export EDITOR="vim"
+
+# -------------------------------------------------------------------------
+# PATH
+#
+# -------------------------------------------------------------------------
+
+#    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# -------------------------------------------------------------------------
+# export
+#
+# -------------------------------------------------------------------------
+#    export PATH
+#    export LANG
+
+#eval $(perl -I$HOME/local/lib/perl5 -Mlocal::lib=$HOME/local)
+
+#function alc() {
+#  if [ $# != 0 ]; then
+#    w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa"
+#  else
+#    echo 'usage: alc word'
+#  fi
+#}
+export PATH="$HOME/.plenv/bin:$PATH"
+eval "$(plenv init -)"
