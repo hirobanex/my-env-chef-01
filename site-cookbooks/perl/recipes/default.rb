@@ -20,7 +20,7 @@ end
 bash "plenv setup and setup perl" do
   user "hirobanex"
   group "hirobanex"
-  not_if { File.exist?("/home/hirobanex/.plenv/versions/5.14.1") }
+  not_if { File.exist?("/home/hirobanex/.plenv/versions/5.18.0") }
   environment 'HOME' => "/home/hirobanex" 
   code <<-EOC
         /home/hirobanex/.plenv/bin/plenv rehash
