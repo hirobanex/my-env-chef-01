@@ -19,7 +19,7 @@ bash "fluentd install" do
   not_if { File.exist?("/etc/td-agent/td-agent.conf") }
   code <<-EOC
     curl -L http://toolbelt.treasuredata.com/sh/install-ubuntu-precise.sh | sh
-    sudo /usr/lib/fluent/ruby/bin/fluent-gem install fluent-plugin-rewrite fluent-plugin-mysql
+    sudo /usr/lib/fluent/ruby/bin/fluent-gem install fluent-plugin-rewrite
   EOC
   action :run
 end

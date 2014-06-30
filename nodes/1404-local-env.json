@@ -1,0 +1,13 @@
+{
+    "host":"192.168.79.136",
+    "run_list":[
+        "recipe[aptitude]",
+        "recipe[init-libray]",
+        "recipe[default-group-user]",
+        "recipe[perl]",
+        "recipe[php]",
+        "recipe[apache]",
+        "recipe[samba]",
+        "recipe[mysql]"
+    ]
+}

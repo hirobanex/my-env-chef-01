@@ -1,5 +1,9 @@
+## 対応OS
+- ubuntu12.04
+- ubuntu14.04(なぜか数回コケるがそのまま繰り返せば入る)
+
 ## OSのインストール後のchefのタスク
-- cheferユーザーをパスワードなしでsudoできるように/etc/sudoersを変更 (%admin ALL=NOPASSWD:ALL)
+- cheferユーザーをパスワードなしでsudoできるように( sudo cat /etc/sudoers.d/chefer < "chefer ALL=(ALL) NOPASSWD:ALL" )
 - (ssh-copy-id -i (公開鍵ファイル) (リモートマシンのアドレス) )
 - ssh-keygen -t rsa
 - cheferの.ssh/authorized_keysに適宜以下をはる
