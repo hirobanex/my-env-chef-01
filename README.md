@@ -3,7 +3,8 @@
 - ubuntu14.04(なぜか数回コケるがそのまま繰り返せば入る)
 
 ## OSのインストール後のchefのタスク
-- cheferユーザーをパスワードなしでsudoできるように( sudo cat /etc/sudoers.d/chefer < "chefer ALL=(ALL) NOPASSWD:ALL" )
+- cheferユーザーをパスワードなしでsudoできるように( sudo vi /etc/sudoers.d/chefer "chefer ALL=(ALL) NOPASSWD:ALL" )
+- sudo aptitude install ssh
 - (ssh-copy-id -i (公開鍵ファイル) (リモートマシンのアドレス) )
 - ssh-keygen -t rsa
 - cheferの.ssh/authorized_keysに適宜以下をはる

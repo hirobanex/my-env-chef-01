@@ -13,6 +13,14 @@
     end
 end
 
+
+#imager
+%w{libfreetype6 libfreetype6-dev libjpeg-dev libtiff-dev libpng-dev}.each do |pkg|
+    package pkg do
+        action:install
+    end
+end
+
 bash "fluentd install" do
   user "root"
   group "root"

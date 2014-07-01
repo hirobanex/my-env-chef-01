@@ -8,7 +8,7 @@
 #
 
 #php init-libraryも参照
-%w{autoconf automake libxslt1-dev re2c curl libxml2-dev php5-dev php5 libbz2-dev libreadline6-dev}.each do |pkg|
+%w{autoconf automake libxslt1-dev re2c curl libxml2-dev php5-dev php5 libbz2-dev libreadline6-dev libcurl4-gnutls-dev}.each do |pkg|
     package pkg do
         action:install
     end
@@ -20,10 +20,10 @@ bash "phpbrew install" do
   group "root"
   not_if { File.exist?("/usr/local/bin/phpbrew") }
   code <<-EOC
-    wget https://raw.github.com/c9s/phpbrew/master/phpbrew --no-check-certificate --output-document=/usr/local/bin/phpbrew
-    chmod +x /usr/bin/phpbrew
-    chmod 777 /usr/lib/apache2/modules/
-    chmod 777 /etc/apache2/mods-available/
+    sudo wget https://raw.github.com/c9s/phpbrew/master/phpbrew --no-check-certificate --output-document=/usr/local/bin/phpbrew
+    sudo chmod +x /usr/local/bin/phpbrew
+    sudo chmod 777 /usr/lib/apache2/modules/
+    sudo chmod 777 /etc/apache2/mods-available/
   EOC
   action :run
 end
@@ -37,11 +37,12 @@ bash "phpbrew setup and setup php5.5" do
   #configureのoptionはec-cube仕様
   code <<-EOC
         cd /home/hirobanex
-        phpbrew init
-        phpbrew install php-5.5.13 +default +mb +dbs +session +session +zlib +openssl +curl +hash +apxs2
-        phpbrew switch php-5.5.13
+        /usr/local/bin/phpbrew init
+        /usr/local/bin/phpbrew install php-5.5.13 +default +mb +dbs +session +zlib +openssl +curl +hash +apxs2 +gd -- --with-gd=shared --enable-gd-native-ttf --with-jpeg-dir=/usr/lib/x86_64-linux-gnu --with-png-dir=/usr/lib/x86_64-linux-gnu --with-freetype-dir=/usr/include/feeetype2/freetype
+        /usr/local/bin/phpbrew switch php-5.5.13
   EOC
   action :run
+  notifies :restart, 'service[apache2]'
 end
 
 bash "composer install" do
