@@ -38,8 +38,9 @@ bash "phpbrew setup and setup php5.5" do
   code <<-EOC
         cd /home/hirobanex
         /usr/local/bin/phpbrew init
-        /usr/local/bin/phpbrew install php-5.5.13 +default +mb +dbs +session +zlib +openssl +curl +hash +apxs2 +gd -- --with-gd=shared --enable-gd-native-ttf --with-jpeg-dir=/usr/lib/x86_64-linux-gnu --with-png-dir=/usr/lib/x86_64-linux-gnu --with-freetype-dir=/usr/include/feeetype2/freetype
+        /usr/local/bin/phpbrew install php-5.5.13 +default +mb +dbs +session +zlib +openssl +curl +hash +apxs2 +gd -- --with-gd=shared --enable-gd-native-ttf --with-jpeg-dir=/usr/lib/x86_64-linux-gnu --with-png-dir=/usr/lib/x86_64-linux-gnu --with-freetype-dir=/usr/include/feeetype2/freetype --with-mysql-sock=/var/run/mysqld/mysqld.sock
         /usr/local/bin/phpbrew switch php-5.5.13
+        /usr/local/bin/phpbrew ext install gd
   EOC
   action :run
   notifies :restart, 'service[apache2]'
