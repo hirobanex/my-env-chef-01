@@ -8,7 +8,7 @@
 #
 
 #php init-libraryも参照
-%w{autoconf automake libxslt1-dev re2c curl libxml2-dev php5-dev php5 libbz2-dev libreadline6-dev libcurl4-gnutls-dev}.each do |pkg|
+%w{autoconf automake libxslt1-dev re2c curl libxml2-dev php5-dev php5 libbz2-dev libreadline6-dev libcurl4-openssl-dev}.each do |pkg|
     package pkg do
         action:install
     end
